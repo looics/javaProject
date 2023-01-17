@@ -54,10 +54,20 @@ public class Member implements Serializable {
     private String email;
 
     @NotNull
-    @Size(min = 10, max = 12)
+    @Size(min = 8, max = 12) // changed min digits from 10 digits to 8 digits
     @Digits(fraction = 0, integer = 12)
     @Column(name = "phone_number")
     private String phoneNumber;
+    
+    // added username field
+    @NotNull
+    @NotEmpty
+    @Size(min = 1, max = 15)
+    private String username;
+    
+    // password field
+    //@NotNull
+    //protected String password;
 
     public Long getId() {
         return id;
@@ -90,4 +100,23 @@ public class Member implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    
+    // get username and set username
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    /*
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    */
 }

@@ -45,10 +45,6 @@
                 <h:inputText id="phoneNumber"
                     value="#{newMember.phoneNumber}" />
                 <h:message for="phoneNumber" errorClass="invalid" />
-                
-                <h:outputLabel for="username" value="username:" />
-                <h:inputText id="username" value="#{newMember.username}" />
-                <h:message for="username" errorClass="invalid" />
             </h:panelGrid>
 
             <p>
@@ -84,10 +80,6 @@
             <h:column>
                 <f:facet name="header">Phone #</f:facet>
                 #{_member.phoneNumber}
-            </h:column>
-            <h:column>
-                <f:facet name="header">username</f:facet>
-                #{_member.username}
             </h:column>
             <h:column>
                 <f:facet name="header">REST URL</f:facet>

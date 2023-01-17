@@ -49,6 +49,13 @@ import org.jboss.as.quickstarts.kitchensink.service.MemberRegistration;
  * <p/>
  * This class produces a RESTful service to read/write the contents of the members table.
  */
+
+/** 
+ * 
+ * @author mapro
+ * add authentication here
+ */
+
 @Path("/members")
 @RequestScoped
 public class MemberResourceRESTService {
