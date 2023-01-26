@@ -44,11 +44,20 @@ import org.jboss.as.quickstarts.kitchensink.data.MemberRepository;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 import org.jboss.as.quickstarts.kitchensink.service.MemberRegistration;
 
+import jakarta.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
+import jakarta.security.enterprise.identitystore.IdentityStore;
+
 /**
  * JAX-RS Example
  * <p/>
  * This class produces a RESTful service to read/write the contents of the members table.
  */
+
+/** 
+ * 
+ * add authentication here
+ */
+
 @Path("/members")
 @RequestScoped
 public class MemberResourceRESTService {
@@ -108,6 +117,7 @@ public class MemberResourceRESTService {
             // Handle the unique constrain violation
             Map<String, String> responseObj = new HashMap<>();
             responseObj.put("email", "Email taken");
+            responseObj.put("username", "username taken");
             builder = Response.status(Response.Status.CONFLICT).entity(responseObj);
         } catch (Exception e) {
             // Handle generic exceptions
@@ -141,9 +151,9 @@ public class MemberResourceRESTService {
             throw new ConstraintViolationException(new HashSet<>(violations));
         }
 
-        // Check the uniqueness of the email address
-        if (emailAlreadyExists(member.getEmail())) {
-            throw new ValidationException("Unique Email Violation");
+        // Check the uniqueness of the email address and username
+        if (emailAlreadyExists(member.getEmail())||usernameAlreadyExists(member.getUsername())) {
+            throw new ValidationException("Unique Email or Username Violation");
         }
     }
 
@@ -177,6 +187,19 @@ public class MemberResourceRESTService {
         Member member = null;
         try {
             member = repository.findByEmail(email);
+        } catch (NoResultException e) {
+            // ignore
+        }
+        return member != null;
+    }
+    /**
+     * 
+     * Check if username exists
+     */
+    public boolean usernameAlreadyExists(String username) {
+        Member member = null;
+        try {
+            member = repository.findByUsername(username);
         } catch (NoResultException e) {
             // ignore
         }

@@ -57,4 +57,16 @@ public class MemberRepository {
         criteria.select(member).orderBy(cb.asc(member.get("name")));
         return em.createQuery(criteria).getResultList();
     }
+    
+    /**
+     * find member by username
+     * To be used in REST API
+     */
+    public Member findByUsername(String username) {
+    	CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Member> criteria = cb.createQuery(Member.class);
+        Root<Member> member = criteria.from(Member.class);
+        criteria.select(member).where(cb.equal(member.get("username"), username));
+        return em.createQuery(criteria).getSingleResult();
+    }
 }

@@ -33,10 +33,14 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
+import jakarta.security.enterprise.credential.Password;
+
+import javax.swing.*;
+
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email", "username"}))
 public class Member implements Serializable {
 
     @Id
@@ -54,10 +58,24 @@ public class Member implements Serializable {
     private String email;
 
     @NotNull
-    @Size(min = 10, max = 12)
+    @Size(min = 8, max = 12) // changed min digits from 10 digits to 8 digits
     @Digits(fraction = 0, integer = 12)
     @Column(name = "phone_number")
     private String phoneNumber;
+    
+    // added username field
+    // username should be unique
+    @NotNull
+    @NotEmpty
+    @Size(min = 1, max = 15)
+    @Column(name = "username")
+    private String username;
+    
+    // added password field
+    @NotNull
+    @NotEmpty
+    @Size(min = 7)
+    private String pw;
 
     public Long getId() {
         return id;
@@ -90,4 +108,24 @@ public class Member implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    
+    // get username and set username
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
+    // get password and set password
+    public String getpw() {
+        return pw;
+    }
+
+    public void setpw(String pw) {
+        this.pw = pw;
+    }
+    
 }
